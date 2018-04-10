@@ -1,5 +1,5 @@
 import random
-d_lim = 2
+
 # Finding i and j coordinates of the empty tile
 def zero_ij(current_state):
     ij = []
@@ -244,20 +244,6 @@ def who_is_next(frontier):
     return value
 
 
-def depth_finder(state_space, expand):
-    depth = 0
-    bla = []
-    for i in state_space:
-        if i == expand:
-            bla.append(i[-2])
-            break
-        else:
-            bla.append(i[-2])
-    depth = len(set(bla))
-    return depth
-
-
-
 solution_index = []
 solution_steps = []
 
@@ -275,7 +261,8 @@ previous_expand_index = -1
 info_carrier = []
 next_move = 'Appear'
 g_state = [0,1,2,3,4,5,6,7,8]
-next_state = [1,2,0,3,4,5,6,7,8]
+next_state = [3,1,2,6,0,5,7,4,8]
+d_lim = 4
 current_state = next_state
 while g_state != current_state:
     show = next_state
@@ -288,8 +275,14 @@ while g_state != current_state:
     info_carrier = combiner(info_carrier, next_move, ij, number_available_moves, available_moves, previous_expand_index, current_state, depth)
     state_space = state_space_add(state_space, info_carrier)
     frontier = make_frontier(state_space)
+    print(frontier, 'frontier')
+    print(state_space)
     expand = who_is_next(frontier)
-    depth = depth_finder(state_space, expand)
+    print(expand, '---expand')
+    #depth = depth_finder(state_space, expand)
+    depth = expand[-1]
+    depth += 1
+    print(depth, '-- !! --depth')
     next_move = find_next_move(expand)
     index_expand = state_index_finder(state_space, expand)
     previous_expand_index = index_expand
